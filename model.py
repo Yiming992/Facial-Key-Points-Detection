@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
-import torch.nn.Functional as F
+import torch.nn.functional as F
 import torch.nn.init as I
 
 class Net(nn.Module):
 
     def __init__(self):
-        super(Net,self).__init()
+        super(Net,self).__init__()
 
         self.conv1=nn.Conv2d(1,32,5,padding=2)
         self.conv2=nn.Conv2d(32,64,3,padding=1)
@@ -23,7 +23,7 @@ class Net(nn.Module):
         self.globalavg=nn.AdaptiveMaxPool2d((1,1))
         self.linear=nn.Linear(256,136)
 
-    def __forward__(self,x):
+    def forward(self,x):
         x=F.relu(self.conv1(x))
         x=self.maxpool1(x)
         x=self.batchnorm1(x)
@@ -38,7 +38,7 @@ class Net(nn.Module):
         x=self.batchnorm4(x)
         x=self.globalavg(x)
         x=x.view(x.size(0),-1)
-        x=self.linear(x)
+        x=F.tanh(self.linear(x))
         return x
 
 
