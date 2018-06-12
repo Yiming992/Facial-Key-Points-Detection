@@ -44,6 +44,9 @@ if __name__=='__main__':
             key_pts=key_pts.type(torch.FloatTensor)
             images=images.type(torch.FloatTensor)
 
+            key_pts=key_pts.cuda()
+            images=images.cuda()
+
             output_pts=net(images)
 
             loss=criterion(output_pts,key_pts)
